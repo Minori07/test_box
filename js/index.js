@@ -58,18 +58,12 @@ function init() {
   tick();
 
   function tick() {
-    window.ontouchstart = handleMouseDown;
-    window.onmousemove = handleMouseMove;
-    window.ontouchend = handleMouseUp;
+    // window.onmousemove = handleMouseMove;
+    // window.ontouchstart = handleTouchStart;
+    window.ontouchmove = handleTouchMove;
     requestAnimationFrame(tick);
 
-    function handleMouseDown(event) {
-      this.isMouseDown = true;
-    }
     function handleMouseMove(event) {
-      if (!this.isMouseDown && width < 480) {
-        return;
-      }
       b_x = width / 2;
       b_y = height / 2;
       event = event || window.event; // IE対応
@@ -79,7 +73,6 @@ function init() {
         box.rotation.x = y - b_y;
         box.rotation.y = x - b_x;
       }
-      // console.log(x + "," + y);
       b_x = x;
       b_y = y;
       // console.log(String(x) + ", " + String(y));
@@ -89,7 +82,28 @@ function init() {
     // レンダリング
     renderer.render(scene, camera);
   }
-  function handleMouseUp(event) {
-    this.isMouseDown = false;
+
+  function handleTouchStart(event) {
+    var touchObject = event.changedTouches[0];
+    b_x = touchObject.pageX;
+    b_y = touchObject.pageY;
+  }
+
+  function handleTouchMove(event) {
+    b_x = width / 2;
+    b_y = height / 2;
+    var touchObject = event.changedTouches[0];
+    event = event || window.event; // IE対応
+    if (touchObject.pageX < width && touchObject.pageY < height) {
+      x = parseInt(touchObject.pageX) * 0.005;
+      y = (parseInt(touchObject.pageY) - 50) * 0.005;
+      box.rotation.x = y - b_y;
+      box.rotation.y = x - b_x;
+    }
+    b_x = x;
+    b_y = y;
+    // console.log(String(x) + ", " + String(y));
+    // レンダリング
+    renderer.render(scene, camera);
   }
 }
