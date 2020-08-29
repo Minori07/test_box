@@ -58,9 +58,8 @@ function init() {
   tick();
 
   function tick() {
-    // window.onmousemove = handleMouseMove;
-    // window.ontouchstart = handleTouchStart;
-    window.ontouchmove = handleTouchMove;
+    window.onmousemove = handleMouseMove;
+    // window.onpointermove = handleTouchMove;
     requestAnimationFrame(tick);
 
     function handleMouseMove(event) {
@@ -81,12 +80,6 @@ function init() {
     // box.rotation.y += 0.01;
     // レンダリング
     renderer.render(scene, camera);
-  }
-
-  function handleTouchStart(event) {
-    var touchObject = event.changedTouches[0];
-    b_x = touchObject.pageX;
-    b_y = touchObject.pageY;
   }
 
   function handleTouchMove(event) {
