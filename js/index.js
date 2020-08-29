@@ -58,9 +58,9 @@ function init() {
   tick();
 
   function tick() {
-    window.onmousedown = handleMouseDown;
+    window.ontouchstart = handleMouseDown;
     window.onmousemove = handleMouseMove;
-    window.onmouseup = handleMouseUp;
+    window.ontouchend = handleMouseUp;
     requestAnimationFrame(tick);
 
     function handleMouseDown(event) {
